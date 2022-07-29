@@ -1,0 +1,8 @@
+<div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
+  <p>Asked By - {{ question.username }}</p>
+  <p>Topic - {{ question.topic }}</p>
+  <p>{{ question.description }}</p>
+  <button class="btn btn-primary btn-md" (click)="approveQuestion(question)">
+    Approve
+  </button>
+</div>

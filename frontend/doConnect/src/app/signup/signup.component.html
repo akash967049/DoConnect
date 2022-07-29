@@ -1,0 +1,214 @@
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="card container">
+      <div class="text-center">
+        <h1>Sign Up</h1>
+        <h6>Register Yourself</h6>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="registerSubmited()">
+        <div class="mb-3">
+          <label for="InputUserName" class="form-label"
+            >Create your User Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputUserName"
+            name="InputUserName"
+            id="InputUserName"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['required'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Username is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['minlength'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Username is too short
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['pattern'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Name must only have alphabets
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputFirstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputFirstName"
+            name="InputFirstName"
+            id="InputFirstName"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputFirstName.errors?.['required'] && (InputFirstName.touched || InputFirstName.dirty)"
+          >
+            Name is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputFirstName.errors?.['minlength'] && (InputFirstName.touched || InputFirstName.dirty)"
+          >
+            Name is too short
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputFirstName.errors?.['pattern'] && (InputFirstName.touched || InputFirstName.dirty)"
+          >
+            Name must only have alphabets and spaces ,First charcter must not be
+            space
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputName" class="form-label">Middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputMiddleName"
+            name="InputMiddleName"
+            id="InputMiddleName"
+          />
+
+          <div
+            class="form-text text-danger"
+            *ngIf="InputMiddleName.errors?.['pattern'] && (InputMiddleName.touched || InputMiddleName.dirty)"
+          >
+            Name must only have alphabets and spaces ,First charcter must not be
+            space
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputLastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputLastName"
+            name="InputLastName"
+            id="InputLastName"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputLastName.errors?.['required'] && (InputLastName.touched || InputLastName.dirty)"
+          >
+            Last Name is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputLastName.errors?.['minlength'] && (InputLastName.touched || InputLastName.dirty)"
+          >
+            Name is too short
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputLastName.errors?.['pattern'] && (InputLastName.touched || InputLastName.dirty)"
+          >
+            Name must only have alphabets and spaces ,First charcter must not be
+            space
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputMobile" class="form-label">Mobile Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputMobile"
+            name="InputMobile"
+            id="InputMobile"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputMobile.errors?.['required'] && (InputMobile.touched || InputMobile.dirty)"
+          >
+            Mobile number is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="(InputMobile.errors?.['maxlength'] || InputMobile.errors?.['minlength'] )&& (InputMobile.touched || InputMobile.dirty)"
+          >
+            length must be 10
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputMobile.errors?.['pattern'] && (InputMobile.touched || InputMobile.dirty)"
+          >
+            Mobile number must have charcter between 0 and 9
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputGender" class="form-Gender">Gender</label>
+          <select
+            class="form-select"
+            formControlName="InputGender"
+            name="InputGender"
+            id="InputGender"
+          >
+            <option value="" selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="InputEmail" class="form-label">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="InputEmail"
+            name="InputEmail"
+            id="InputEmail"
+            aria-describedby="emailHelp"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputEmail.errors?.['required'] && (InputEmail.touched || InputEmail.dirty)"
+          >
+            Email is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputEmail.errors?.['email'] && (InputEmail.touched || InputEmail.dirty)"
+          >
+            Email is Invalid
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="InputPassword"
+            name="InputPassword"
+            id="InputPassword"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputPassword.errors?.['required'] && (InputPassword.touched || InputPassword.dirty)"
+          >
+            Password is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="(InputPassword.errors?.['minlength'] || InputPassword.errors?.['maxlength']) && (InputPassword.touched || InputPassword.dirty)"
+          >
+            Password must have length between 5 and 15
+          </div>
+        </div>
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="btn btn-primary"
+        >
+          Sign Up
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

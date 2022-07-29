@@ -1,0 +1,4 @@
+<h2 class="text-center mb-5">List of all the questions to approve</h2>
+<div *ngFor="let question of allapprovequestions.value">
+  <app-approvequestionitem [question]="question"></app-approvequestionitem>
+</div>

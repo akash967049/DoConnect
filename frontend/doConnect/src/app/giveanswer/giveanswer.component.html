@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="card container">
+      <div class="text-center"></div>
+      <form [formGroup]="giveAnswerForm" (ngSubmit)="giveAnswerSubmited()">
+        <div class="mb-3">
+          <label for="InputDescription" class="form-label"
+            >Please give your answer here</label
+          >
+          <textarea
+            rows="7"
+            class="form-control"
+            formControlName="InputDescription"
+            name="InputDescription"
+            id="InputDescription"
+          ></textarea>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputDescription.errors?.['required'] && (InputDescription.touched || InputDescription.dirty)"
+          >
+            Question is required
+          </div>
+        </div>
+        <button
+          type="submit"
+          [disabled]="giveAnswerForm.invalid"
+          class="btn btn-primary align-center"
+        >
+          Give Answer
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

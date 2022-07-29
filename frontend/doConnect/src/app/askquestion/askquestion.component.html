@@ -1,0 +1,63 @@
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="card container">
+      <div class="text-center">
+        <h1>Ask Question</h1>
+        <h6>Please enter Topic & your Question</h6>
+      </div>
+      <form [formGroup]="askQuestionForm" (ngSubmit)="askQuestionSubmited()">
+        <div class="mb-3 topic">
+          <label for="InputTopic" class="form-label"> Topic </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputTopic"
+            name="InputTopic"
+            id="InputTopic"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputTopic.errors?.['required'] && (InputTopic.touched || InputTopic.dirty)"
+          >
+            Topic is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputTopic.errors?.['minlength'] && (InputTopic.touched || InputTopic.dirty)"
+          >
+            Topic is too short
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputTopic.errors?.['pattern'] && (InputTopic.touched || InputTopic.dirty)"
+          >
+            Topic must only have alphabets
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputDescription" class="form-label">Your Question</label>
+          <textarea
+            rows="7"
+            class="form-control"
+            formControlName="InputDescription"
+            name="InputDescription"
+            id="InputDescription"
+          ></textarea>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputDescription.errors?.['required'] && (InputDescription.touched || InputDescription.dirty)"
+          >
+            Question is required
+          </div>
+        </div>
+        <button
+          type="submit"
+          [disabled]="askQuestionForm.invalid"
+          class="btn btn-primary align-center"
+        >
+          Ask Question
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

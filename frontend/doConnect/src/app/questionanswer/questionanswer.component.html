@@ -1,0 +1,15 @@
+<div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
+  <h4>Question</h4>
+  <p>Asked By - {{ question.username }}</p>
+  <p>Topic - {{ question.topic }}</p>
+  <p>{{ question.description }}</p>
+</div>
+<div>
+  <app-giveanswer [question]="question"></app-giveanswer>
+</div>
+<div>
+  <h6>Answers given by users</h6>
+  <div *ngFor="let answer of answers">
+    <app-viewanswer [answer]="answer"></app-viewanswer>
+  </div>
+</div>

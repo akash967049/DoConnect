@@ -1,0 +1,20 @@
+.card{
+    border: none;
+    width: 700px;
+    padding: 40px;
+    background-color: hsla(205, 46%, 30%, 1);
+    background: linear-gradient(90deg, hsla(205, 46%, 30%, 1) 0%, hsla(260, 46%, 30%, 1) 100%);
+}
+
+.card h1,
+h6 {
+    color: #fff;
+}
+
+label {
+    color: #fff;
+}
+
+.topic{
+    width: 40%;
+}

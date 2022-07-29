@@ -1,0 +1,423 @@
+<div class="mt-5">
+  <div class="card">
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <li class="nav-item userinfo" role="presentation">
+        <button
+          class="btn nav-link active use"
+          id="pills-home-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-home"
+          type="button"
+          role="tab"
+          aria-controls="pills-home"
+          aria-selected="true"
+        >
+          Profile
+        </button>
+      </li>
+      <li class="nav-item userinfo" role="presentation">
+        <button
+          class="btn nav-link use"
+          id="pills-profile-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-profile"
+          type="button"
+          role="tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+        >
+          Update
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="pills-home"
+        role="tabpanel"
+        aria-labelledby="pills-home-tab"
+      >
+        <div class="mt-2">
+          <h1>
+            {{ userinfoData.value.firstname }}
+            {{ userinfoData.value.middlename }}
+            {{ userinfoData.value.lastname }}
+          </h1>
+          <p class="title">{{ userinfoData.value.username }}</p>
+          <p>Gender - {{ userinfoData.value.gender }}</p>
+          <p>Date of birth - {{ userinfoData.value.dateofbirth }}</p>
+          <p>Phone - {{ userinfoData.value.phone }}</p>
+          <p>Email - {{ userinfoData.value.email }}</p>
+          <p>Address - {{ userinfoData.value.address }}</p>
+          <p>
+            <button
+              type="button"
+              class="btn btn-danger"
+              *ngIf="showdeletebutton()"
+              (click)="deleteUser()"
+            >
+              Delete
+            </button>
+          </p>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-profile"
+        role="tabpanel"
+        aria-labelledby="pills-profile-tab"
+      >
+        <div class="list-group mt-2">
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#nameupdate"
+          >
+            Name
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#dateofbirthupdate"
+          >
+            Date Of Birth
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#genderupdate"
+          >
+            Gender
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#phoneupdate"
+          >
+            Phone
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#emailupdate"
+          >
+            Email
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="modal"
+            data-bs-target="#addressupdate"
+          >
+            Address
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="nameupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form [formGroup]="updateName" (ngSubmit)="updateNameSubmited()">
+      <div class="mb-3">
+        <h3>Update Name</h3>
+        <label for="InputFirstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="InputFirstName"
+          name="InputFirstName"
+          id="InputFirstName"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="InputFirstName.errors?.['required'] && (InputFirstName.touched || InputFirstName.dirty)"
+        >
+          Name is required
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputFirstName.errors?.['minlength'] && (InputFirstName.touched || InputFirstName.dirty)"
+        >
+          Name is too short
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputFirstName.errors?.['pattern'] && (InputFirstName.touched || InputFirstName.dirty)"
+        >
+          Name must only have alphabets and spaces ,First charcter must not be
+          space
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="InputName" class="form-label">Middle Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="InputMiddleName"
+          name="InputMiddleName"
+          id="InputMiddleName"
+        />
+
+        <div
+          class="form-text text-danger"
+          *ngIf="InputMiddleName.errors?.['pattern'] && (InputMiddleName.touched || InputMiddleName.dirty)"
+        >
+          Name must only have alphabets and spaces ,First charcter must not be
+          space
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="InputLastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="InputLastName"
+          name="InputLastName"
+          id="InputLastName"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="InputLastName.errors?.['required'] && (InputLastName.touched || InputLastName.dirty)"
+        >
+          Last Name is required
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputLastName.errors?.['minlength'] && (InputLastName.touched || InputLastName.dirty)"
+        >
+          Name is too short
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputLastName.errors?.['pattern'] && (InputLastName.touched || InputLastName.dirty)"
+        >
+          Name must only have alphabets and spaces ,First charcter must not be
+          space
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="updateName.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="genderupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form [formGroup]="updateGender" (ngSubmit)="updateGenderSubmited()">
+      <div class="mb-3">
+        <h3>Update Gender</h3>
+        <label for="InputGender" class="form-Gender">Gender</label>
+        <select
+          class="form-select"
+          formControlName="InputGender"
+          name="InputGender"
+          id="InputGender"
+        >
+          <option value="" selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+          <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        [disabled]="updateGender.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="phoneupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form [formGroup]="updatePhone" (ngSubmit)="updatePhoneSubmited()">
+      <div class="mb-3">
+        <label for="InputPhone" class="form-label">Mobile Number</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="InputPhone"
+          name="InputPhone"
+          id="InputPhone"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="InputPhone.errors?.['required'] && (InputPhone.touched || InputPhone.dirty)"
+        >
+          Mobile number is required
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="(InputPhone.errors?.['maxlength'] || InputPhone.errors?.['minlength'] )&& (InputPhone.touched || InputPhone.dirty)"
+        >
+          length must be 10
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputPhone.errors?.['pattern'] && (InputPhone.touched || InputPhone.dirty)"
+        >
+          Mobile number must have charcter between 0 and 9
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="updatePhone.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="emailupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form [formGroup]="updateEmail" (ngSubmit)="updateEmailSubmited()">
+      <div class="mb-3">
+        <label for="InputEmail" class="form-label">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="InputEmail"
+          name="InputEmail"
+          id="InputEmail"
+          aria-describedby="emailHelp"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="InputEmail.errors?.['required'] && (InputEmail.touched || InputEmail.dirty)"
+        >
+          Email is required
+        </div>
+        <div
+          class="form-text text-danger"
+          *ngIf="InputEmail.errors?.['email'] && (InputEmail.touched || InputEmail.dirty)"
+        >
+          Email is Invalid
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="updateEmail.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="addressupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form [formGroup]="updateAddress" (ngSubmit)="updateAddressSubmited()">
+      <div class="mb-3">
+        <label for="InputAddress" class="form-label">Address</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="InputAddress"
+          name="InputAddress"
+          id="InputAddress"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="InputAddress.errors?.['required'] && (InputAddress.touched || InputEmail.dirty)"
+        >
+          Address is required
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="updateAddress.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="dateofbirthupdate"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-content modal-body">
+    <form
+      [formGroup]="updateDateOfBirth"
+      (ngSubmit)="updateDateOfBirthSubmited()"
+    >
+      <div class="mb-3">
+        <h3>Date of birth update</h3>
+        <label for="InputDateOfBirth" class="form-label">Date of birth</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="InputDateOfBirth"
+          name="InputDateOfBirth"
+          id="InputDateOfBirth"
+        />
+      </div>
+      <button
+        type="submit"
+        [disabled]="updateDateOfBirth.invalid"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

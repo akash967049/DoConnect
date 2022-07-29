@@ -1,0 +1,69 @@
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="card container">
+      <div class="text-center">
+        <h1>Login</h1>
+        <h6>Please enter username & password</h6>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="loginSubmited()">
+        <div class="mb-3">
+          <label for="InputUserName" class="form-label"> Username </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputUserName"
+            name="InputUserName"
+            id="InputUserName"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['required'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Username is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['minlength'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Username is too short
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="InputUserName.errors?.['pattern'] && (InputUserName.touched || InputUserName.dirty)"
+          >
+            Name must only have alphabets
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="InputPassword"
+            name="InputPassword"
+            id="InputPassword"
+          />
+          <div
+            class="form-text text-danger"
+            *ngIf="InputPassword.errors?.['required'] && (InputPassword.touched || InputPassword.dirty)"
+          >
+            Password is required
+          </div>
+          <div
+            class="form-text text-danger"
+            *ngIf="(InputPassword.errors?.['minlength'] || InputPassword.errors?.['maxlength']) && (InputPassword.touched || InputPassword.dirty)"
+          >
+            Password must have length between 5 and 15
+          </div>
+        </div>
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="btn btn-primary"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

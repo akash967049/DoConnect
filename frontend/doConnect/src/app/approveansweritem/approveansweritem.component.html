@@ -1,0 +1,7 @@
+<div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
+  <p>Given By - {{ answer.username }}</p>
+  <p>Answer - {{ answer.description }}</p>
+  <button class="btn btn-primary btn-md" (click)="approveAnswer(answer)">
+    Approve
+  </button>
+</div>

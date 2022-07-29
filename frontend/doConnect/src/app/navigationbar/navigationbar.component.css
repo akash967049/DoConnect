@@ -1,0 +1,14 @@
+/* .nav-link{
+    
+    color:white;
+} */
+
+/* .navbar{
+    background-color: rgb(56, 244, 14);
+} */
+
+.btn-outline-light:hover {
+    color: #000;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}

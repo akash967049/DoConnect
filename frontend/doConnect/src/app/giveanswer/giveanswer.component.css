@@ -1,0 +1,19 @@
+.card{
+    border: none;
+    width: 700px;
+    padding: 40px;
+   
+}
+
+.card h1,
+h6 {
+    color: #fff;
+}
+
+label {
+    color: #fff;
+}
+
+.topic{
+    width: 40%;
+}
