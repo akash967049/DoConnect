@@ -1,5 +1,7 @@
 package com.aakash.org.util.response;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +13,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatResponse {
+public class ChatList {
 	
-	private String message;
-	private String sender;
+	List<ChatResponse> chatlist;
 
 }

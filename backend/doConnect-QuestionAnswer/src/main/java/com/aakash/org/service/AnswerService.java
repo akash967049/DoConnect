@@ -1,10 +1,14 @@
 package com.aakash.org.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aakash.org.entity.Answer;
 import com.aakash.org.entity.Question;
@@ -16,7 +20,10 @@ import com.aakash.org.util.JwtUtil;
 import com.aakash.org.util.mapper.AnswerMapper;
 import com.aakash.org.util.request.AnswerRequest;
 import com.aakash.org.util.request.IdRequest;
+import com.aakash.org.util.request.SearchRequest;
 import com.aakash.org.util.response.AnswerList;
+import com.aakash.org.util.response.AnswerResponse;
+import com.aakash.org.util.response.QuestionResponse;
 
 
 @Service
@@ -32,6 +39,9 @@ public class AnswerService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private EntityManager entityManger;
+	
+	@Autowired
 	private EmailSenderService emailSenderService;
 	
 	@Autowired
@@ -43,15 +53,37 @@ public class AnswerService {
 	
 	// To add question
 	
-	public String addAnswer(AnswerRequest answer, String token) {
+	public String addAnswer(AnswerRequest answerRequest, MultipartFile file, String token) {
 		String username = jwtTokenUtil.extractUsername(token);
 		User user = userRepository.findByUserName(username).orElse(null);
-		Question question = questionRepository.findById(answer.getQuestionId()).orElse(null);
+		Question question = questionRepository.findById(answerRequest.getQuestionId()).orElse(null);
 		if(user != null && question != null) {
-			Answer ans = AnswerMapper.mapAnswerRequest(answer, user, question);
-			answerRepository.save(ans);
-			emailSenderService.requestToApproveAnswer(username, ans);
-			return "A"+ans.getId();
+			Answer answer = AnswerMapper.mapAnswerRequest(answerRequest, user, question);
+			answerRepository.save(answer);
+//			emailSenderService.requestToApproveAnswer(username, answer);
+			
+			String massage = "Answer uploded Successfully";
+			AnswerList unapprovedAnswers = this.getUnapprovedAnswers();
+			if(file != null) {
+				AnswerResponse ansResponse = null;
+				for(AnswerResponse ans: unapprovedAnswers.getAnswers() ) {
+					if(ans.getDescription().equals(answerRequest.getDescription())) {
+						ansResponse = ans;
+					}
+				}
+				if(!file.isEmpty()) {
+				System.out.println("It is not empty file");
+				try {
+					String name = "a"+ansResponse.getId();
+					massage += "\n"+imageModalService.uplaodImage(file, name);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println(("some error occured in uploding image"));
+					e.printStackTrace();
+					massage += "\nerror in uploading image";
+				}}
+			}
+			return massage;
 		}else {
 			return "Solution Not Added Succefully";
 		}
@@ -118,7 +150,7 @@ public class AnswerService {
 		int id = idRequest.getId();
 		Answer answer = answerRepository.findById(id).orElse(null);
 		if(answer!=null) {
-			imageModalService.deleteImage("A"+answer.getId());
+			imageModalService.deleteImage("a"+answer.getId());
 			answerRepository.delete(answer);
 			return "Answer Deleted";
 		}else {
@@ -142,5 +174,26 @@ public class AnswerService {
 		}
 		
 	}
+	
+	// search answer
+		@Transactional
+		private AnswerList searchAnswerByDiscription(SearchRequest searchRequest) {
+			String sqlQuery = "from Answer where (description like : description)";
+			AnswerList answerList = new AnswerList();
+			
+			List<Answer> answers = (entityManger
+					.createQuery(sqlQuery, Answer.class)
+					.setParameter("description","%" + searchRequest.getSearchtext() + "%")
+					.getResultList());
+			if(answers!=null && answers.size()!=0) {
+				for(Answer ans: answers) {
+					answerList.getAnswers().add(AnswerMapper.mapAnswer(ans, ans.getQuestion(), ans.getUser()));
+				}
+				return answerList;
+			}else {
+				return null;
+			}
+			
+		}
 
 }

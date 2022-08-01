@@ -6,7 +6,7 @@ import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class MakeRequest{
-    baseUrls:string[] = ["","http://localhost:9191/", "http://localhost:9192/", "http://localhost:9192/"];
+    baseUrls:string[] = ["","http://localhost:9191/", "http://localhost:9192/", "http://localhost:9193/"];
 
     constructor(private http: HttpClient,  private route:Router, private notifyService:NotificationService){
     }

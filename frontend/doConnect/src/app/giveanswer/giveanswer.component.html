@@ -21,6 +21,14 @@
             Question is required
           </div>
         </div>
+        <div class="mb-3 image">
+          <label for="InputImage" class="form-label"> Upload Image </label>
+          <input
+            type="file"
+            class="form-control"
+            (change)="onFileChanged($event)"
+          />
+        </div>
         <button
           type="submit"
           [disabled]="giveAnswerForm.invalid"

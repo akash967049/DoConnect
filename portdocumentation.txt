@@ -1,3 +1,6 @@
+
+Backend springboot
+[
 // *************
 
 port => 9191 - Authentication
@@ -7,3 +10,17 @@ port => 9191 - Authentication
 port => 9192 - QuestionAnswer
 
 // **************
+
+port => 9193 - ChatServices
+
+]
+
+// *************
+
+frontend Angualar
+[
+port => 4200 - DoConnect UI
+
+]
+
+// ***************

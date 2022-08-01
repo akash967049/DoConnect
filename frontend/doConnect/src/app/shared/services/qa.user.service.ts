@@ -34,30 +34,14 @@ export class QaUserService{
 
     }
 
-    createAnswer(createAnswer:CreateAnswerData){
+    createAnswer(answerData: FormData){
         const path = this.basepath + "createanswer";
-        this.makeRequest.postRequest(this.feedback, createAnswer, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showSuccess(this.feedback.massage,"");
-                this.route.navigate(["/home"]);
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, answerData, path, this.microservice);
     }
 
-    createQuestion(createQuestion:CreateQuestionData){
-        this.route.navigate(['/loader']);
+    createQuestion(questionData: FormData){
         const path = this.basepath + "createquestion";
-        this.makeRequest.postRequest(this.feedback, createQuestion, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showSuccess(this.feedback.massage,"");
-                this.notifyService.showInfo("You can ask another question or go to home to explore more","")
-                this.route.navigate(["/askquestion"]);
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, questionData, path, this.microservice);
     }
 
 }

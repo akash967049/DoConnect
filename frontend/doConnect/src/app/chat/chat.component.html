@@ -1,0 +1,39 @@
+<div *ngIf="showUserList()">
+  <div>
+    <input
+      type="search"
+      #searchuser
+      (keyup)="searchforusers(searchuser.value)"
+    />
+  </div>
+  <div *ngFor="let user of showRecievers">
+    <div (click)="showmessagepage(user)">
+      <p>{{ user }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!showUserList()">
+  <button class="btn btn-primary" (click)="goToUserListPage()">Back</button>
+  <h4>{{ reciever }}</h4>
+  <div class="container my-2" *ngFor="let message of messages">
+    <div class="card">
+      <h4>{{ message.message }}</h4>
+      <h6>{{ message.sender }}</h6>
+    </div>
+  </div>
+  <div class="container d-flex flex-row">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Enter message"
+      #search
+      (keyup.enter)="sendMessage(search.value)"
+      aria-label="Search"
+      aria-describedby="addon-wrapping"
+    />
+    <button class="btn me-1 btn-outline-primary" (click)="loadmessages()">
+      Refresh
+    </button>
+  </div>
+</div>

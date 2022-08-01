@@ -3,12 +3,15 @@ package com.aakash.org.controller.user;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +41,14 @@ public class UserQuestion {
 		return response;
 	}
 	
-	@PostMapping("createquestion")
-	public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest questionRequest, HttpServletRequest request){
+	@PostMapping(value = {"createquestion"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<?> createQuestion(
+			@RequestPart("question") QuestionRequest questionRequest,
+			@RequestPart(name = "imageFile", required =  false) MultipartFile file,
+			HttpServletRequest request
+			){
 		String token = request.getHeader("Authorization").substring(7);
-		String massage = questionService.addQuestion(questionRequest, token);
+		String massage = questionService.addQuestion(questionRequest, file, token);
 		response = ResponseEntity.ok()
 				.body(new Feedback(massage));
 		return response;
@@ -50,10 +57,15 @@ public class UserQuestion {
 	// upload image file
 	
 	@PostMapping("uploadimage")
-	public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file){
+	public ResponseEntity<?> uploadImage(@RequestParam("imageFile") MultipartFile file){
 		String massage ="Image Not Uploaded";
+		if(file.isEmpty()) {
+			return ResponseEntity.ok()
+					.body(new Feedback(massage));
+		}
+		System.out.println(file.getOriginalFilename());
 		try {
-			massage = imageModalService.uplaodImage(file);
+			massage = imageModalService.uplaodImage(file, "check");
 		}catch(Exception e) {
 			return ResponseEntity.ok()
 					.body(new Feedback("Image Not Uploaded"));

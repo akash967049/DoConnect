@@ -1,5 +1,6 @@
 package com.aakash.org.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,7 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aakash.org.entity.Question;
 import com.aakash.org.entity.User;
@@ -49,15 +51,38 @@ public class QuestionService {
 	
 	// Add a question
 	
-	public String addQuestion(QuestionRequest questionRequest, String token) {
+	public String addQuestion(QuestionRequest questionRequest, MultipartFile file, String token) {
 		
 		String username = jwtTokenUtil.extractUsername(token);
 
 		User user = userRepository.findByUserName(username).orElse(null);
 		Question question = QuestionMapper.mapQuestionRequest(questionRequest, user);
 		questionRepository.save(question);
-		emailSenderService.requestToApproveQuestion(username, question);
-		return "Q"+question.getId();
+//		emailSenderService.requestToApproveQuestion(username, question);
+		
+		String massage = "Question uploded Successfully";
+		System.out.println(massage);
+		QuestionList unapprovedQuestions = this.getUnapprovedQuestion();
+		if(file != null) {
+			QuestionResponse quesResponse = null;
+			for(QuestionResponse ques: unapprovedQuestions.getQuestions() ) {
+				if(ques.getDescription().equals(question.getDescription())) {
+					quesResponse = ques;
+				}
+			}
+			if(!file.isEmpty()) {
+			System.out.println("It is not empty file");
+			try {
+				String name = "q"+quesResponse.getId();
+				massage += "\n"+imageModalService.uplaodImage(file, name);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println(("some error occured in uploding image"));
+				e.printStackTrace();
+				massage += "\nerror in uploading image";
+			}}
+		}
+		return massage;
 	}
 	
 	// get a question by id
@@ -160,7 +185,7 @@ public class QuestionService {
 					answerService.deleteAnswer(new IdRequest(ans.getId()));
 				}		
 			}
-			imageModalService.deleteImage("Q"+question.getId());
+			imageModalService.deleteImage("q"+question.getId());
 			questionRepository.delete(question);
 			return "Question Deleted";
 		}else {

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.aakash</groupId>
-	<artifactId>springboot-backend-email</artifactId>
+	<artifactId>backend-doConnect-ChatService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>doConnect-ChatService</name>
 	<description>Backend security project for Spring Boot</description>

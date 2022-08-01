@@ -2,3 +2,34 @@
 <div *ngFor="let question of allhomequestions.value">
   <app-viewquestion [question]="question"></app-viewquestion>
 </div>
+
+<div class="stickonscreen">
+  <button
+    class="btn chatbutton"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight"
+    id="btn-chat"
+  >
+    Chat
+  </button>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-chat></app-chat>
+  </div>
+</div>

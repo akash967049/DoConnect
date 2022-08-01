@@ -21,9 +21,9 @@ public class ImageModalService {
 	private ImageModalRepository imageModalRepository;
 	
 	
-	public String uplaodImage(MultipartFile file) throws IOException {
+	public String uplaodImage(MultipartFile file, String name) throws IOException {
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
-		ImageModal img = new ImageModal(file.getOriginalFilename(), file.getContentType(),
+		ImageModal img = new ImageModal(name, file.getContentType(),
 				compressBytes(file.getBytes()));
 		imageModalRepository.save(img);
 		return "Image uploded successfully";

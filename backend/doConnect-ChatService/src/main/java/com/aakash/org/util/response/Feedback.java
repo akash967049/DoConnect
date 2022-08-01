@@ -1,6 +1,7 @@
 package com.aakash.org.util.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +12,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatResponse {
-	
-	private String message;
-	private String sender;
+@Builder
+public class Feedback {
 
+	private String massage;
 }

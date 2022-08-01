@@ -35,6 +35,8 @@ export class QuestionanswerComponent implements OnInit {
       console.log(this.question);
     }
 
+    
+
   }
 
 }

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,7 +15,14 @@ export class GiveanswerComponent implements OnInit {
 
   @Input() question!: Question;
 
-  constructor(private qaUserService:QaUserService, private route:Router) { }
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+
+  constructor(private qaUserService:QaUserService, private route:Router, private httpClient:HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -29,7 +37,21 @@ export class GiveanswerComponent implements OnInit {
     const description = this.giveAnswerForm.value.InputDescription;
     if(description!=null){
       const createAnswer = new CreateAnswerData(description, this.question.id);
-      this.qaUserService.createAnswer(createAnswer);
+      const answerData = new FormData();
+      answerData.append('answer', new Blob([JSON.stringify(createAnswer)], {type: 'application/json'}));
+    if(this.selectedFile!=null){
+    answerData.append('imageFile', this.selectedFile);
+    }
+
+    this.qaUserService.createAnswer(answerData).subscribe((response) => {
+        if (response.status === 200) {
+          this.message = 'Image uploaded successfully';
+          alert("Uploaded")
+        } else {
+          this.message = 'Image not uploaded successfully';
+        }
+      }
+      );
     }else{
       console.log("Input are not valid for creating question");
     } 
@@ -37,6 +59,15 @@ export class GiveanswerComponent implements OnInit {
 
   get InputDescription(){
     return this.giveAnswerForm.get("InputDescription") as FormControl;
+  }
+
+  public onFileChanged(event) {
+    // Select File
+    if(event.target.files!=null){
+    this.selectedFile = <File> event.target.files.item(0);
+    console.log(this.selectedFile);
+    console.log(event);
+    }
   }
 
 }

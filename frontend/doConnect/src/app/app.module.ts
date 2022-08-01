@@ -33,6 +33,8 @@ import { ApprovequestionComponent } from './approvequestion/approvequestion.comp
 import { ApproveanswerComponent } from './approveanswer/approveanswer.component';
 import { ApprovequestionitemComponent } from './approvequestionitem/approvequestionitem.component';
 import { ApproveansweritemComponent } from './approveansweritem/approveansweritem.component';
+import { ChatComponent } from './chat/chat.component';
+import { ChatService } from './shared/services/chat.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { ApproveansweritemComponent } from './approveansweritem/approveanswerite
     ApprovequestionComponent,
     ApproveanswerComponent,
     ApprovequestionitemComponent,
-    ApproveansweritemComponent
+    ApproveansweritemComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,7 @@ import { ApproveansweritemComponent } from './approveansweritem/approveanswerite
     QaAdminService,
     QaUserService,
     QaAllService,
+    ChatService,
     {provide: HTTP_INTERCEPTORS, useClass: CommonInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
