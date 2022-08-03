@@ -1,5 +1,9 @@
 package com.aakash.org.service;
 
+/*
+ * @Author - Aakash Verma
+ */
+
 import java.io.IOException;
 import java.util.List;
 
@@ -60,7 +64,7 @@ public class AnswerService {
 		if(user != null && question != null) {
 			Answer answer = AnswerMapper.mapAnswerRequest(answerRequest, user, question);
 			answerRepository.save(answer);
-//			emailSenderService.requestToApproveAnswer(username, answer);
+			emailSenderService.requestToApproveAnswer(username, answer);
 			
 			String massage = "Answer uploded Successfully";
 			AnswerList unapprovedAnswers = this.getUnapprovedAnswers();

@@ -69,36 +69,3 @@
     </div>
   </div>
 </div>
-
-<div class="container row">
-  <div class="col-md-12">
-    <div *ngIf="message">{{ message }}</div>
-  </div>
-</div>
-<br />
-
-<div class="container row">
-  <div class="col-md-6">
-    <input
-      type="text"
-      class="form-control"
-      id="name"
-      placeholder="image name"
-      [(ngModel)]="imageName"
-      name="name"
-    />
-  </div>
-  <div class="col-md-6">
-    <button class="btn ask-button" type="button" (click)="getImage()">
-      Get Image
-    </button>
-  </div>
-</div>
-
-<div class="container row">
-  <div class="col-md-12 my-2">
-    <div *ngIf="retrievedImage">
-      <img [src]="retrievedImage" />
-    </div>
-  </div>
-</div>

@@ -21,16 +21,9 @@ export class QaUserService{
     constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){}
 
     getAnswerByQuestionId(idRequest: IdData){
-        this.route.navigate(["/loader"]);
         const path = this.basepath + "answerbyquestionid";
-        this.makeRequest.postRequest(this.currentAnswers, idRequest, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.currentAnswers = resp.body;
-                console.log(this.currentAnswers.answers);
-                localStorage.setItem("currentanswer", JSON.stringify(this.currentAnswers.answers));
-                this.route.navigate(["/questionanswer"]);
-            }
-        });
+        return this.makeRequest.postRequest(this.currentAnswers, idRequest, path, this.microservice);
+
 
     }
 

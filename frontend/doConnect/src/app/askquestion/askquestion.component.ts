@@ -6,6 +6,7 @@ import { CreateQuestionData } from '../objects/createquestiondata';
 import { AuthService } from '../shared/services/auth.service';
 import { QaUserService } from '../shared/services/qa.user.service';
 import { SearchData } from '../objects/searchdata';
+import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
   selector: 'app-askquestion',
@@ -19,10 +20,10 @@ export class AskquestionComponent implements OnInit {
   base64Data: any;
   retrieveResonse: any;
   message: string;
-  imageName: any;
+  // imageName: any;
   searchImg: any;
 
-  constructor(private qaUserService:QaUserService, private route:Router, private httpClient:HttpClient) { }
+  constructor(private qaUserService:QaUserService, private route:Router, private httpClient:HttpClient, private notifyService: NotificationService) { }
 
   ngOnInit(): void {
   }
@@ -52,9 +53,10 @@ export class AskquestionComponent implements OnInit {
     this.qaUserService.createQuestion(questionData).subscribe((response) => {
         if (response.status === 200) {
           this.message = 'Question uploaded successfully';
-          alert("Uploaded")
+          this.notifyService.showSuccess(this.message, "");
         } else {
           this.message = 'Question not uploaded successfully';
+          this.notifyService.showSuccess(this.message, "");
         }
       }
       );
@@ -77,32 +79,4 @@ export class AskquestionComponent implements OnInit {
     console.log(event);
     }
   }
-
-  // ***************************************
-
-
-    //Gets called when the user clicks on retieve image button to get the image from back end
-    getImage() {
-      //Make a call to Sprinf Boot to get the Image Bytes.
-      console.log("get image clicked");
-
-      this.searchImg = new SearchData(this.imageName);
-      console.log("search data is prepared");
-      this.httpClient.post('http://localhost:9192/all/searchimage', this.searchImg, { observe: 'response' })
-        .subscribe(
-          res => {
-            console.log("image as response");
-            this.retrieveResonse = res.body;
-            this.base64Data = this.retrieveResonse.picByte;
-            if(this.retrieveResonse.picByte != null){
-            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-            }else{
-              this.retrievedImage = null;
-            }
-          }
-        );
-    }
-
-    //***************************** */
-
 }

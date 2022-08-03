@@ -1,35 +1,50 @@
 <h2 class="text-center mt-3 mb-3">Welcome to Do Connect</h2>
-<div *ngFor="let question of allhomequestions.value">
-  <app-viewquestion [question]="question"></app-viewquestion>
+<div>
+  <input
+    class="form-control me-2"
+    type="search"
+    #searchQuestion
+    (keyup)="searchByDescription(searchQuestion.value)"
+    placeholder="Search"
+    aria-label="Search"
+  />
 </div>
-
-<div class="stickonscreen">
-  <button
-    class="btn chatbutton"
-    data-bs-toggle="offcanvas"
-    data-bs-target="#offcanvasRight"
-    aria-controls="offcanvasRight"
-    id="btn-chat"
-  >
-    Chat
-  </button>
-</div>
-
-<div
-  class="offcanvas offcanvas-end"
-  tabindex="-1"
-  id="offcanvasRight"
-  aria-labelledby="offcanvasRightLabel"
->
-  <div class="offcanvas-header">
-    <button
-      type="button"
-      class="btn-close text-reset"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
+<div *ngIf="homeQuestions">
+  <div *ngFor="let question of homeQuestions">
+    <app-viewquestion
+      [question]="question"
+      (deleteQues)="deleteQues(question)"
+    ></app-viewquestion>
   </div>
-  <div class="offcanvas-body">
-    <app-chat></app-chat>
+</div>
+<div *ngIf="checkUserLogin()">
+  <div class="stickonscreen">
+    <button
+      class="btn chatbutton"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasRight"
+      aria-controls="offcanvasRight"
+      id="btn-chat"
+    >
+      Chat
+    </button>
+  </div>
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvasRight"
+    aria-labelledby="offcanvasRightLabel"
+  >
+    <div class="offcanvas-header">
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <app-chat></app-chat>
+    </div>
   </div>
 </div>

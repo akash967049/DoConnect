@@ -35,6 +35,7 @@ import { ApprovequestionitemComponent } from './approvequestionitem/approvequest
 import { ApproveansweritemComponent } from './approveansweritem/approveansweritem.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatService } from './shared/services/chat.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ChatService } from './shared/services/chat.service';
     ApproveanswerComponent,
     ApprovequestionitemComponent,
     ApproveansweritemComponent,
-    ChatComponent
+    ChatComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

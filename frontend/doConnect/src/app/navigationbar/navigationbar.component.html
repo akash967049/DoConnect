@@ -16,9 +16,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/home" (click)="goToHome()"
-              >Home</a
-            >
+            <a class="nav-link active" routerLink="/home">Home</a>
           </li>
           <li class="nav-item">
             <a
@@ -70,8 +68,7 @@
             <a
               class="nav-link active"
               *ngIf="authRoute.checklogin() && authRoute.checkadmin()"
-              routerLink="/loader"
-              (click)="goToApproveQuestion()"
+              routerLink="/approvequestion"
             >
               Approve Question
             </a>
@@ -80,8 +77,7 @@
             <a
               class="nav-link active"
               *ngIf="authRoute.checklogin() && authRoute.checkadmin()"
-              routerLink="/loader"
-              (click)="goToApproveAnswer()"
+              routerLink="/approveanswer"
             >
               Approve Answer
             </a>
@@ -97,15 +93,6 @@
             </a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>

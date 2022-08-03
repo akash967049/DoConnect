@@ -10,31 +10,24 @@ import { NotificationService } from "./notification.service";
 @Injectable()
 export class QaAllService{
     microservice = 2;
-    homeQuestions!:QuestionList;
+    questionList!:QuestionList;
+    basepath:string = "all/";
+    response: any;
 
     constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){}
 
     getQuestionByDescription(searchData:SearchData){
-        const path = "all/searchbydescription";
-        this.makeRequest.postRequest(this.homeQuestions, searchData, path, this.microservice).subscribe(resp => {
-            if(resp.body!=null){
-                this.homeQuestions = resp.body;
-                console.log(this.homeQuestions.questions);
-                    localStorage.setItem("homequestions", JSON.stringify(this.homeQuestions.questions));
-                    this.route.navigate(["/home"]);
-            }
-        });
+        const path = this.basepath+"searchbydescription";
+        return this.makeRequest.postRequest(this.questionList, searchData, path, this.microservice);
     }
 
     getQuestionByTopic(searchData:SearchData){
-        const path = "all/searchbytopic";
-        this.makeRequest.postRequest(this.homeQuestions, searchData, path, this.microservice).subscribe(resp => {
-            if(resp.body!=null){
-                this.homeQuestions = resp.body;
-                console.log(this.homeQuestions.questions);
-                    localStorage.setItem("homequestions", JSON.stringify(this.homeQuestions.questions));
-                    this.route.navigate(["/home"]);
-            }
-        });
+        const path = this.basepath+"searchbytopic";
+        return this.makeRequest.postRequest(this.questionList, searchData, path, this.microservice);
+    }
+
+    searchImage(searchImg: SearchData){
+        const path = this.basepath+"searchimage";
+        return this.makeRequest.postRequest(this.response, searchImg, path, this.microservice);
     }
 }

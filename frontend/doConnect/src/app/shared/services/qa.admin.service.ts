@@ -23,107 +23,36 @@ export class QaAdminService{
 
     approveAnswer(idData: IdData){
         const path = this.basepath + "approveanswer";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showSuccess(this.feedback.massage, "");
-                this.route.navigate(["/loader"]);
-                this.getUnapprovedAnswers();
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, idData, path, this.microservice);
     }
 
     approveQuestion(idData: IdData){
         const path = this.basepath + "approvequestion";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showSuccess(this.feedback.massage, "");this.route.navigate(["/loader"])
-                this.getUnapprovedQuestions();
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, idData, path, this.microservice);
     }
 
     // Delete question and answers
 
     deleteAnswer(idData: IdData){
         const path = this.basepath + "deleteanswer";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showInfo(this.feedback.massage, "");
-                this.route.navigate(["/home"]);
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, idData, path, this.microservice);
     }
 
     deleteQuestion(idData: IdData){
         const path = this.basepath + "deletequestion";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showInfo(this.feedback.massage, "");
-                this.route.navigate(["/home"]);
-            }
-        });
-    }
-
-    // Reject question and answers
-
-    rejectAnswer(idData: IdData){
-        const path = this.basepath + "deleteanswer";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showInfo(this.feedback.massage, "");
-                this.route.navigate(["/home"]);
-            }
-        });
-    }
-
-    rejectQuestion(idData: IdData){
-        const path = this.basepath + "deletequestion";
-        this.makeRequest.postRequest(this.feedback, idData, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.feedback = resp.body;
-                console.log(this.feedback.massage);
-                this.notifyService.showInfo(this.feedback.massage, "");
-                this.route.navigate(["/home"]);
-            }
-        });
+        return this.makeRequest.postRequest(this.feedback, idData, path, this.microservice);
     }
 
     // Get List of unapproved question and answers
 
     getUnapprovedAnswers(){
-        this.route.navigate(["/loader"]);
         const path = this.basepath + "getunapprovedanswers";
-        this.makeRequest.getRequest(this.answerList, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.answerList = resp.body;
-                console.log(this.answerList.answers);
-                localStorage.setItem("unapprovedanswers", JSON.stringify(this.answerList.answers));
-                this.route.navigate(["/approveanswer"]);
-            }
-        });
+        return this.makeRequest.getRequest(this.answerList, path, this.microservice);
     }
 
     getUnapprovedQuestions(){
-        this.route.navigate(["/loader"]);
         const path = this.basepath + "getunapprovedquestions";
-        this.makeRequest.getRequest(this.answerList, path, this.microservice).subscribe(resp => {
-            if(resp.body != null){
-                this.questionList = resp.body;
-                console.log(this.questionList.questions);
-                localStorage.setItem("unapprovedquestions", JSON.stringify(this.questionList.questions));
-                this.route.navigate(["/approvequestion"])
-            }
-        });
+        return this.makeRequest.getRequest(this.answerList, path, this.microservice);
     }
     
 }

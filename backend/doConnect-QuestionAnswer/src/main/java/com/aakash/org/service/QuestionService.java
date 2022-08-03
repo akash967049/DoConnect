@@ -1,5 +1,9 @@
 package com.aakash.org.service;
 
+/*
+ * @Author - Aakash Verma
+ */
+
 import java.io.IOException;
 import java.util.List;
 
@@ -58,7 +62,7 @@ public class QuestionService {
 		User user = userRepository.findByUserName(username).orElse(null);
 		Question question = QuestionMapper.mapQuestionRequest(questionRequest, user);
 		questionRepository.save(question);
-//		emailSenderService.requestToApproveQuestion(username, question);
+		emailSenderService.requestToApproveQuestion(username, question);
 		
 		String massage = "Question uploded Successfully";
 		System.out.println(massage);

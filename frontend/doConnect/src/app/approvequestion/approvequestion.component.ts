@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Feedback } from '../objects/Feedback';
+import { IdData } from '../objects/iddata';
 import { Question } from '../objects/question';
+import { NotificationService } from '../shared/services/notification.service';
+import { QaAdminService } from '../shared/services/qa.admin.service';
 
 @Component({
   selector: 'app-approvequestion',
@@ -11,21 +14,45 @@ export class ApprovequestionComponent implements OnInit {
 
   approvequestions!:Question[];
 
-  allapprovequestions:BehaviorSubject<any> = new BehaviorSubject(null);
-  constructor() { 
+  feedback!:Feedback;
+
+  constructor(private qaAdminService: QaAdminService, private notifyService: NotificationService) { 
     this.loadAllUnapprovedQuestion();
   }
 
   ngOnInit(): void {
     this.loadAllUnapprovedQuestion();
-    this.allapprovequestions.next(this.approvequestions);
   }
 
   loadAllUnapprovedQuestion(){
-    const data = localStorage.getItem("unapprovedquestions");
-    if(data!=null){
-      this.approvequestions = JSON.parse(data);
-    }
+    this.qaAdminService.getUnapprovedQuestions().subscribe( resp => {
+      if(resp.body != null){
+          this.approvequestions = resp.body.questions;
+          console.log(this.approvequestions);
+      }
+    });
+  }
+
+  approveQuestion(question : Question){
+    this.qaAdminService.approveQuestion(new IdData(question.id)).subscribe(resp => {
+      if(resp.body != null){
+          this.feedback = resp.body;
+          console.log(this.feedback.massage);
+          this.notifyService.showSuccess(this.feedback.massage, "");
+          this.loadAllUnapprovedQuestion();
+      }
+  });
+  }
+
+  rejectQuestion(question : Question){
+    this.qaAdminService.deleteQuestion(new IdData(question.id)).subscribe(resp => {
+      if(resp.body != null){
+          this.feedback = resp.body;
+          console.log(this.feedback.massage);
+          this.notifyService.showInfo(this.feedback.massage, "");
+          this.loadAllUnapprovedQuestion();
+      }
+    });
   }
 
 }

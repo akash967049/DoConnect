@@ -1,7 +1,15 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
-  <p>Given By - {{ answer.username }}</p>
-  <p>Answer - {{ answer.description }}</p>
-  <button class="btn btn-primary btn-md" (click)="approveAnswer(answer)">
-    Approve
-  </button>
+  <div>
+    <p>Given By - {{ answer.username }}</p>
+    <p>Answer - {{ answer.description }}</p>
+  </div>
+  <div class="col-md-12 my-2">
+    <div *ngIf="retrievedImage">
+      <img [src]="retrievedImage" />
+    </div>
+  </div>
+  <p>
+    <button class="btn btn-danger btn-md" (click)="reject()">Reject</button>
+    <button class="btn btn-primary btn-md" (click)="approve()">Approve</button>
+  </p>
 </div>

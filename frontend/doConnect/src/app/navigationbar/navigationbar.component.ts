@@ -34,10 +34,6 @@ export class NavigationbarComponent implements OnInit {
     this.qaAdminService.getUnapprovedQuestions();
   }
 
-  goToHome(){
-    this.qaAllService.getQuestionByTopic(new SearchData("All"));
-  }
-
   goToApproveAnswer(){
     this.qaAdminService.getUnapprovedAnswers();
   }

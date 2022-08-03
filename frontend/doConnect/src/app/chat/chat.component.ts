@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from '../objects/message';
 import { MessageRequest } from '../objects/messageRequest';
 import { UserName } from '../objects/userName';
+import { AuthRouteGaurd } from '../shared/guards/auth.route.guards';
 import { ChatService } from '../shared/services/chat.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class ChatComponent implements OnInit {
   reciever : string = null;
   messages: Message[];
   
-  constructor(private chatService: ChatService) { 
+  constructor(private chatService: ChatService, private authGuard: AuthRouteGaurd) { 
     this.loadchatbox();
   }
 
