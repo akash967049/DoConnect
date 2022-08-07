@@ -53,7 +53,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
 	private ApiInfo apiInfoMetaData() {
 
-		return new ApiInfoBuilder().title("WELCOME TO SWAGGER").description("API Endpoint Decoration")
+		return new ApiInfoBuilder().title("WELCOME TO Question Answer Service").description("DoConnect Question Answer Services")
 				.contact(new Contact("Akash Verma", "https://www.akash967049.com/", "akash967049@gmail.com"))
 				.license("Apache 2.0").licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html").version("1.0.0")
 				.build();

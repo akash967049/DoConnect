@@ -6,7 +6,6 @@ package com.aakash.org.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -24,6 +23,7 @@ public class ImageModalService {
 	@Autowired
 	private ImageModalRepository imageModalRepository;
 	
+	// Upload Image to database
 	
 	public String uplaodImage(MultipartFile file, String name) throws IOException {
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
@@ -42,6 +42,8 @@ public class ImageModalService {
 		}
 		return img;
 	}
+	
+	// delete Image from database
 	
 	public String deleteImage(String imageName) {
 		ImageModal img = imageModalRepository.findByName(imageName).orElse(null);

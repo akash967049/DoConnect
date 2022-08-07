@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { UserSignup } from 'src/app/objects/usersignup';
 import { Router } from '@angular/router';
 import { MakeRequest } from '../request/make.request';
@@ -15,7 +14,7 @@ export class AuthService {
     userInfo: BehaviorSubject<any> = new BehaviorSubject(null);
     role: BehaviorSubject<any> = new BehaviorSubject(null);
 
-    constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){
+    constructor( private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){
         this.loadUserInfo();
     }
 
@@ -76,6 +75,8 @@ export class AuthService {
 
     }
 
+    // Send Request to get a user registered
+
     userregister(userSignup: UserSignup){
         console.log(userSignup);
         var feedback : Feedback = {
@@ -95,6 +96,8 @@ export class AuthService {
         });
         console.log("but it is after request");
     }
+
+    // logout from the account
 
     logout(){
         console.log("Logout clicked");

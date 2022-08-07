@@ -1,39 +1,104 @@
-<div *ngIf="showUserList()">
-  <div>
+<section *ngIf="showUserList()">
+  <div class="row d-flex justify-content-center">
     <input
+      class="form-control text-center me-2 searchUser mb-4 w-60"
       type="search"
       #searchuser
       (keyup)="searchforusers(searchuser.value)"
-    />
-  </div>
-  <div *ngFor="let user of showRecievers">
-    <div (click)="showmessagepage(user)">
-      <p>{{ user }}</p>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="!showUserList()">
-  <button class="btn btn-primary" (click)="goToUserListPage()">Back</button>
-  <h4>{{ reciever }}</h4>
-  <div class="container my-2" *ngFor="let message of messages">
-    <div class="card">
-      <h4>{{ message.message }}</h4>
-      <h6>{{ message.sender }}</h6>
-    </div>
-  </div>
-  <div class="container d-flex flex-row">
-    <input
-      type="search"
-      class="form-control"
-      placeholder="Enter message"
-      #search
-      (keyup.enter)="sendMessage(search.value)"
+      placeholder="Search User"
       aria-label="Search"
-      aria-describedby="addon-wrapping"
     />
-    <button class="btn me-1 btn-outline-primary" (click)="loadmessages()">
-      Refresh
-    </button>
   </div>
-</div>
+  <div *ngIf="!showRecievers.length; else elseBlock">
+    <h6 class="text-center">No user is available with this username</h6>
+  </div>
+  <ng-template #elseBlock>
+    <div *ngFor="let user of showRecievers">
+      <div class="list-group" (click)="showmessagepage(user)">
+        <h6 class="list-group-item btn text-center active">
+          {{ user | titlecase }}
+        </h6>
+      </div>
+    </div>
+  </ng-template>
+</section>
+
+<section
+  *ngIf="!showUserList()"
+  class="messageBlock d-flex justify-content-center"
+>
+  <div class="container">
+    <div class="row">
+      <div class="card" id="chat1" style="border-radius: 15px">
+        <div
+          class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+          style="border-top-left-radius: 15px; border-top-right-radius: 15px"
+        >
+          <p class="mb-0 fw-bold btn text-white" (click)="goToUserListPage()">
+            Back
+          </p>
+          <p class="mb-0 fw-bold">Chat Live</p>
+          <p class="mb-0 fw-bold">{{ reciever | titlecase }}</p>
+        </div>
+        <div
+          class="card-body"
+          #scrollMe
+          [scrollTop]="scrollMe.scrollHeight"
+          data-mdb-perfect-scrollbar="true"
+        >
+          <div *ngIf="messages.length; else noMessageBlock">
+            <div *ngFor="let message of messages">
+              <div *ngIf="userIsSender(message.sender); else recievedBlock">
+                <div class="d-flex flex-row justify-content-end mb-4">
+                  <div
+                    class="p-3 border chatElement bg-primary"
+                    style="border-radius: 15px"
+                  >
+                    <p class="small mb-0 text-white justify-content-end">
+                      {{ message.message }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <ng-template #recievedBlock>
+                <div class="d-flex flex-row justify-content-start mb-4">
+                  <div
+                    class="p-3 border chatElement"
+                    style="border-radius: 15px; background-color: #f5f6f7"
+                  >
+                    <p id="target" class="small mb-0 justify-content-start">
+                      {{ message.message }}
+                    </p>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+          <ng-template #noMessageBlock>
+            <div class="d-flex flex-row justify-content-center mb-4">
+              <div class="p-3 border chatElement" style="border-radius: 15px">
+                <p class="small mb-0">No message history</p>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="card-footer d-flex flex-row justify-content-start">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Type message and Press Enter"
+            [(ngModel)]="sendMessageContent"
+            #search
+            (keyup.enter)="sendMessage(search.value, target)"
+            aria-label="Search"
+            aria-describedby="addon-wrapping"
+          />
+          <button class="btn me-1 btn-primary" (click)="loadmessages()">
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -18,6 +18,8 @@ export class UserItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Display username of a user
+
   goToUserinfo(user :String){
     const userName:UserName = new UserName(this.user);
     this.userService.getUserDetails(userName);

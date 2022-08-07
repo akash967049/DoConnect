@@ -1,8 +1,8 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
   <h4>Question</h4>
   <div>
-    <p>Asked By - {{ question.username }}</p>
-    <p>Topic - {{ question.topic }}</p>
+    <p>Asked By - {{ question.username | titlecase }}</p>
+    <p>Topic - {{ question.topic | titlecase }}</p>
     <p>{{ question.description }}</p>
   </div>
   <div class="col-md-12 my-2">
@@ -15,11 +15,19 @@
   <app-giveanswer [question]="question"></app-giveanswer>
 </div>
 <div>
-  <h6>Answers given by users</h6>
-  <div *ngFor="let answer of answers">
-    <app-viewanswer
-      [answer]="answer"
-      (deleteAns)="deleteAns(answer)"
-    ></app-viewanswer>
+  <h4>Answers given by users</h4>
+  <div *ngIf="!AnswerFound(); else elseBlock">
+    <h6 class="text-center">No Answers found for above Question</h6>
+    <p class="text-center">Be first one to give answer</p>
   </div>
+  <ng-template #elseBlock>
+    <div>
+      <div *ngFor="let answer of answers">
+        <app-viewanswer
+          [answer]="answer"
+          (deleteAns)="deleteAns(answer)"
+        ></app-viewanswer>
+      </div>
+    </div>
+  </ng-template>
 </div>

@@ -20,6 +20,9 @@ export class SignupComponent implements OnInit {
     
   }
 
+  // Form for geting detail for new registration on website and 
+  // validate that
+
   registerForm = new FormGroup({
     InputUserName: new FormControl("", [
       Validators.required, 
@@ -60,6 +63,8 @@ export class SignupComponent implements OnInit {
     ])
   });
 
+  // Sends Request for registering a new user
+  
   registerSubmited(){
     console.log(this.registerForm.value);
     const userSignup = new UserSignup(

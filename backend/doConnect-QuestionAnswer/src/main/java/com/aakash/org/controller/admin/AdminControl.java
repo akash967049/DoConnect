@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aakash.org.service.AnswerService;
-import com.aakash.org.service.ImageModalService;
 import com.aakash.org.service.QuestionService;
 import com.aakash.org.util.request.IdRequest;
 import com.aakash.org.util.response.AnswerList;
@@ -44,7 +43,7 @@ public class AdminControl {
 		return response;
 	}
 	
-	// Approv question and answer controlls
+	// Approve question and answer controlls
 	
 	
 	@PostMapping("approveanswer")
@@ -64,7 +63,7 @@ public class AdminControl {
 	}
 	
 	
-	// get unapproved question and answer controlls
+	// get unapproved question and answer controls
 	
 	@GetMapping("getunapprovedanswers")
 	public ResponseEntity<?> getUnapprovedAnswer(){
@@ -76,6 +75,7 @@ public class AdminControl {
 				.body(answerList);
 		return response;
 	}
+
 	
 	@GetMapping("getunapprovedquestions")
 	public ResponseEntity<?> getUnapprovedQuestion(){

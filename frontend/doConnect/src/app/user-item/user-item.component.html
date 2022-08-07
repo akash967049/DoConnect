@@ -1,5 +1,5 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
-  <h3>{{ user }}</h3>
+  <h3>{{ user | titlecase }}</h3>
   <button class="btn btn-primary btn-md" (click)="goToUserinfo(user)">
     User Info
   </button>

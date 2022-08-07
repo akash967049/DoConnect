@@ -1,7 +1,5 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
 import { AllUsers } from "src/app/objects/allusers";
 import { Feedback } from "src/app/objects/Feedback";
 import { UserDetail } from "src/app/objects/userdetail";
@@ -10,7 +8,6 @@ import { UserUpdateInfo } from "src/app/objects/userUpdateInfo";
 import { AuthRouteGaurd } from "../guards/auth.route.guards";
 import { MakeRequest } from "../request/make.request";
 import { AuthService } from "./auth.service";
-import { NotificationService } from "./notification.service";
 
 
 @Injectable()
@@ -21,8 +18,10 @@ export class UserService{
     userDetail!:UserDetail;
     allUsers!:AllUsers;
 
-    constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService, private authService:AuthService, private authGuard:AuthRouteGaurd){
+    constructor( private route:Router, private makeRequest: MakeRequest, private authService:AuthService, private authGuard:AuthRouteGaurd){
     }
+
+    // Request to get user detail from backend
     
     getUserDetails(userName: UserName){
         var path="/getuserinfo";
@@ -40,6 +39,8 @@ export class UserService{
             }
         });
     }
+
+    // Request to update user details
 
     updateUserDetail(userupdateInfo:UserUpdateInfo, updateChoice:number){
         this.route.navigate(["/loader"]);
@@ -66,6 +67,8 @@ export class UserService{
         ) 
     }
 
+    // Request to get userdetails by username
+
     getUserDelete(userName: UserName){
         var path = "/deleteuser";
         if(this.authGuard.checkadmin()){
@@ -90,6 +93,8 @@ export class UserService{
         });
     }
 
+    // loads user detail
+
     loadUserDetail(){
         const data = localStorage.getItem("userDetail");
         if(data!=null){
@@ -97,18 +102,20 @@ export class UserService{
         }
     }
 
+    // load all user usernames
+
     loadallusers(){
         this.route.navigate(["/loader"]);
         const path = "admin/getallusers"
         this.makeRequest.getRequest(AllUsers, path, this.microservice)
         .subscribe(resp => {
-                if(resp.headers.get("Authorization") != null){
-                    this.allUsers = resp.body;
-                    console.log(this.allUsers.allUsers);
-                    localStorage.setItem("allUsers", JSON.stringify(this.allUsers.allUsers));
-                    
-                    this.route.navigate(["/allusers"]);
-                }
-            });
+            if(resp.headers.get("Authorization") != null){
+                this.allUsers = resp.body;
+                console.log(this.allUsers.allUsers);
+                localStorage.setItem("allUsers", JSON.stringify(this.allUsers.allUsers));
+                
+                this.route.navigate(["/allusers"]);
+            }
+        });
     }
 }

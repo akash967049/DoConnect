@@ -1,10 +1,18 @@
 <h2 class="text-center mb-5">List of all the Answers to approve</h2>
-<div *ngIf="approveanswers">
-  <div *ngFor="let answer of approveanswers">
-    <app-approveansweritem
-      [answer]="answer"
-      (approveAnswer)="approveAnswer(answer)"
-      (rejectAnswer)="rejectAnswer(answer)"
-    ></app-approveansweritem>
-  </div>
+<div *ngIf="!approveanswers.length; else elseBlock">
+  <h6 class="text-center">No Answer request pending for Approval</h6>
+  <p class="text-center">
+    Do promotion of DoConnect to incourage users to give answer
+  </p>
 </div>
+<ng-template #elseBlock>
+  <div>
+    <div *ngFor="let answer of approveanswers">
+      <app-approveansweritem
+        [answer]="answer"
+        (approveAnswer)="approveAnswer(answer)"
+        (rejectAnswer)="rejectAnswer(answer)"
+      ></app-approveansweritem>
+    </div>
+  </div>
+</ng-template>

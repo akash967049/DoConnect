@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Answer } from '../objects/answer';
 import { Feedback } from '../objects/Feedback';
 import { IdData } from '../objects/iddata';
@@ -13,7 +12,7 @@ import { QaAdminService } from '../shared/services/qa.admin.service';
 })
 export class ApproveanswerComponent implements OnInit {
 
-  approveanswers!:Answer[];
+  approveanswers:Answer[] = [];
 
   feedback!: Feedback;
 
@@ -25,6 +24,8 @@ export class ApproveanswerComponent implements OnInit {
     this.loadAllUnapprovedAnswers();
   }
 
+  // Loads all unapproved answer from backend
+
   loadAllUnapprovedAnswers(){
     this.qaAdminService.getUnapprovedAnswers().subscribe( resp => {
       if(resp.body != null){
@@ -33,6 +34,8 @@ export class ApproveanswerComponent implements OnInit {
       }
     });
   }
+
+  // It sends request to backend for approving an answer
 
   approveAnswer(answer: Answer){
     this.qaAdminService.approveAnswer(new IdData(answer.id)).subscribe(resp => {
@@ -45,6 +48,8 @@ export class ApproveanswerComponent implements OnInit {
     });
   }
 
+  // It sends request to backend for rejecting an answer
+  
   rejectAnswer(answer: Answer){
     this.qaAdminService.deleteAnswer(new IdData(answer.id)).subscribe(resp => {
       if(resp.body != null){

@@ -1,11 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { IdData } from '../objects/iddata';
 import { Question } from '../objects/question';
 import { SearchData } from '../objects/searchdata';
-import { QaAdminService } from '../shared/services/qa.admin.service';
 import { QaAllService } from '../shared/services/qa.all.service';
-import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-approvequestionitem',
@@ -23,7 +19,7 @@ export class ApprovequestionitemComponent implements OnInit {
   base64Data: any;
   retrieveResonse: any;
 
-  constructor(private route:Router, private userService:UserService, private qaAdminService: QaAdminService, private qaAllService: QaAllService) {
+  constructor( private qaAllService: QaAllService) {
     this.loadQuestionImage();
   }
 
@@ -31,13 +27,19 @@ export class ApprovequestionitemComponent implements OnInit {
     this.loadQuestionImage();
   }
 
+  // this emits event to parent for approval of question
+
   approve(){
     this.approveQuestion.emit(this.question);
   }
 
+  // this emits event to parent for rejection of question
+
   reject(){
     this.rejectQuestion.emit(this.question);
   }
+
+  // this loads image related to this question
 
   loadQuestionImage(){
     if(this.question){

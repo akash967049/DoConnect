@@ -29,17 +29,25 @@ export class ViewquestionComponent implements OnInit {
     this.loadQuestionImage();
   }
 
+  // detacts Change in varible to render question image
+
   ngOnChanges(){
     this.loadQuestionImage();
   }
+
+  // this navigates to question page for viewing answers
 
   seeAnswers(){
     this.route.navigate(['/questionanswer'], {state :{data: this.question}});
   }
 
+  // Sends a request to delete a Question
+
   deleteQuestion(){
     this.deleteQues.emit(this.question);
   }
+
+  // loads Image from backend for the question
 
   loadQuestionImage(){
     if(this.question){
@@ -56,9 +64,13 @@ export class ViewquestionComponent implements OnInit {
     }
   }
 
+  // Checks wether admin is logged in
+
   checkAdminLogin(){
     return (this.authGuard.checklogin() && this.authGuard.checkadmin());
   }
+
+  // Checks wether user is logged in
 
   checkUserLogin(){
     return this.authGuard.checklogin();

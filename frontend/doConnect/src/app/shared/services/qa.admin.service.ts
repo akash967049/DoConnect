@@ -1,12 +1,9 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { AnswerList } from "src/app/objects/answerlist";
 import { Feedback } from "src/app/objects/Feedback";
 import { IdData } from "src/app/objects/iddata";
 import { QuestionList } from "src/app/objects/questionlist";
 import { MakeRequest } from "../request/make.request";
-import { NotificationService } from "./notification.service";
 
 @Injectable()
 export class QaAdminService{
@@ -17,7 +14,7 @@ export class QaAdminService{
     questionList!:QuestionList;
 
 
-    constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){}
+    constructor(private makeRequest: MakeRequest){}
 
     // approve question and answers
 

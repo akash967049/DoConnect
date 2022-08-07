@@ -46,7 +46,6 @@ public class AdminController {
 	// Get list of all users
 	@GetMapping("getallusers")
 	public ResponseEntity<?> getAllUsers(HttpServletRequest request){
-		String token = request.getHeader("Authorization").substring(7);
 		ListOfUsersResponse usernamelist = userService.getAllUsers("user"); 
 		response = ResponseEntity.ok()
 				.body(usernamelist);
@@ -57,7 +56,6 @@ public class AdminController {
 	
 	@PostMapping("getuserinfo")
 	public ResponseEntity<?> getUserInfo(@RequestBody UsernameRequest usernameRequest, HttpServletRequest request) {
-		String token = request.getHeader("Authorization").substring(7);
 		UserInformationResponse userInformationResponse = pIS.getUserInformationByUsername(usernameRequest.getUsername());
 		response = ResponseEntity.ok()
 				.body(userInformationResponse);
@@ -80,7 +78,6 @@ public class AdminController {
 	@PostMapping("updatename")
 	public ResponseEntity<?> updatename(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
 		String value = updateRequest.getNameRequest().getFirstname()+","+updateRequest.getNameRequest().getMiddlename()+","+updateRequest.getNameRequest().getLastname();
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), value, 1);
 		
 		response = ResponseEntity.ok()
@@ -92,7 +89,6 @@ public class AdminController {
 
 	@PostMapping("updategender")
 	public ResponseEntity<?> updategender(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), updateRequest.getValue(), 2);
 		
 		response = ResponseEntity.ok()
@@ -105,7 +101,6 @@ public class AdminController {
 	@PostMapping("updateemail")
 	public ResponseEntity<?> updateemail(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
 
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), updateRequest.getValue() , 3);
 		
 		response = ResponseEntity.ok()
@@ -118,7 +113,6 @@ public class AdminController {
 	@PostMapping("updatephone")
 	public ResponseEntity<?> updatephone(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
 
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), updateRequest.getValue(), 4);
 		
 		response = ResponseEntity.ok()
@@ -131,7 +125,6 @@ public class AdminController {
 	@PostMapping("updatedateofbirth")
 	public ResponseEntity<?> updatedateofbirth(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
 
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), updateRequest.getValue(), 5);
 		
 		response = ResponseEntity.ok()
@@ -144,7 +137,6 @@ public class AdminController {
 	@PostMapping("updateaddress")
 	public ResponseEntity<?> updateaddress(@RequestBody UpdateRequest updateRequest, HttpServletRequest request) {
 
-		String token = request.getHeader("Authorization").substring(7);
 		String massage = pIS.updateOneInfoByUsername(updateRequest.getUsername(), updateRequest.getValue(), 6);
 		
 		response = ResponseEntity.ok()
@@ -156,7 +148,6 @@ public class AdminController {
 	
 	@PostMapping("deleteuser")
 	public ResponseEntity<?> deleteuser(@RequestBody UsernameRequest usernameRequest, HttpServletRequest request) {
-		String token = request.getHeader("Authorization").substring(7);
 		
 		String massage = userService.deleteUserByUserName(usernameRequest.getUsername());
 		response = ResponseEntity.ok()

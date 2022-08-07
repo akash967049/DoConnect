@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-allusers',
@@ -8,17 +7,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AllusersComponent implements OnInit {
 
-  users!:string[];
+  users:string[] = [];
 
-  alluser:BehaviorSubject<any> = new BehaviorSubject(null);
   constructor() { 
     this.loadallusers();
   }
 
+  // Runs whenever this component is called
+
   ngOnInit(): void {
     this.loadallusers();
-    this.alluser.next(this.users);
   }
+
+  // Load User Details from localstorage
 
   loadallusers(){
     const data = localStorage.getItem("allUsers");

@@ -4,9 +4,6 @@ package com.aakash.org.util.response;
  * @Author - Aakash Verma
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

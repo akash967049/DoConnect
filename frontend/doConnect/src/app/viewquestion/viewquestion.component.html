@@ -1,6 +1,6 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
   <div>
-    <p>Asked By - {{ question.username }}</p>
+    <p>Asked By - {{ question.username | titlecase }}</p>
     <p>Topic - {{ question.topic }}</p>
     <p>{{ question.description }}</p>
   </div>
@@ -9,20 +9,24 @@
       <img [src]="retrievedImage" />
     </div>
   </div>
-  <p>
-    <button
-      *ngIf="checkAdminLogin()"
-      class="btn btn-danger btn-md"
-      (click)="deleteQuestion()"
-    >
-      Delete
+  <div *ngIf="!checkUserLogin(); else elseBlock">
+    <button routerLink="/login" class="btn btn-info">
+      Login to see Answer
     </button>
-    <button
-      *ngIf="checkUserLogin()"
-      class="btn btn-primary btn-md"
-      (click)="seeAnswers()"
-    >
-      See Answer
-    </button>
-  </p>
+  </div>
+  <ng-template #elseBlock>
+    <p>
+      <button
+        *ngIf="checkAdminLogin()"
+        class="btn btn-danger btn-md m-1"
+        (click)="deleteQuestion()"
+      >
+        Delete
+      </button>
+
+      <button class="btn btn-primary btn-md m-1" (click)="seeAnswers()">
+        See Answer
+      </button>
+    </p>
+  </ng-template>
 </div>

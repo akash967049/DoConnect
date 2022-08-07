@@ -8,24 +8,24 @@
       <form [formGroup]="askQuestionForm" (ngSubmit)="askQuestionSubmited()">
         <div class="mb-3 topic">
           <label for="InputTopic" class="form-label"> Topic </label>
-          <input
-            type="text"
-            class="form-control"
+          <select
+            class="form-select"
             formControlName="InputTopic"
             name="InputTopic"
             id="InputTopic"
-          />
+          >
+            <option value="" selected>Select Topic</option>
+            <option value="java">Java</option>
+            <option value="angular">Angular</option>
+            <option value="python">Python</option>
+            <option value="database">Database</option>
+            <option value="javascript">JavaScript</option>
+          </select>
           <div
             class="form-text text-danger"
             *ngIf="InputTopic.errors?.['required'] && (InputTopic.touched || InputTopic.dirty)"
           >
             Topic is required
-          </div>
-          <div
-            class="form-text text-danger"
-            *ngIf="InputTopic.errors?.['minlength'] && (InputTopic.touched || InputTopic.dirty)"
-          >
-            Topic is too short
           </div>
           <div
             class="form-text text-danger"

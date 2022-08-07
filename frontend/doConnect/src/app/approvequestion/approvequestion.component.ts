@@ -12,7 +12,7 @@ import { QaAdminService } from '../shared/services/qa.admin.service';
 })
 export class ApprovequestionComponent implements OnInit {
 
-  approvequestions!:Question[];
+  approvequestions:Question[] = [];
 
   feedback!:Feedback;
 
@@ -24,6 +24,8 @@ export class ApprovequestionComponent implements OnInit {
     this.loadAllUnapprovedQuestion();
   }
 
+  // Loads all unapproved question from backend
+
   loadAllUnapprovedQuestion(){
     this.qaAdminService.getUnapprovedQuestions().subscribe( resp => {
       if(resp.body != null){
@@ -32,6 +34,8 @@ export class ApprovequestionComponent implements OnInit {
       }
     });
   }
+
+  // It sends request to backend for approving an question
 
   approveQuestion(question : Question){
     this.qaAdminService.approveQuestion(new IdData(question.id)).subscribe(resp => {
@@ -43,6 +47,8 @@ export class ApprovequestionComponent implements OnInit {
       }
   });
   }
+
+  // It sends request to backend for rejecting an question
 
   rejectQuestion(question : Question){
     this.qaAdminService.deleteQuestion(new IdData(question.id)).subscribe(resp => {

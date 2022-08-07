@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Message } from '../objects/message';
 import { MessageRequest } from '../objects/messageRequest';
 import { UserName } from '../objects/userName';
-import { AuthRouteGaurd } from '../shared/guards/auth.route.guards';
 import { ChatService } from '../shared/services/chat.service';
 
 @Component({
@@ -13,17 +12,21 @@ import { ChatService } from '../shared/services/chat.service';
 export class ChatComponent implements OnInit {
 
   recievers: string[];
-  showRecievers: string[];
+  showRecievers: string[] = [];
   reciever : string = null;
   messages: Message[];
+  target: HTMLElement;
+  sendMessageContent: string="";
   
-  constructor(private chatService: ChatService, private authGuard: AuthRouteGaurd) { 
-    this.loadchatbox();
+  constructor(private chatService: ChatService, private cdref: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.loadchatbox();
+    
   }
+
+  // Load user to which user can chat
 
   loadchatbox(){
     this.chatService.getUsersList().subscribe(resp => {
@@ -34,11 +37,15 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  // load message history from between two users
+
   showmessagepage(user: string){
     this.reciever = user;
     this.loadmessages();
   }
 
+  // load message history from between two users
+  
   loadmessages(){
     this.chatService.getChatHistory(new UserName(this.reciever)).subscribe(resp => {
       if(resp.status === 200){
@@ -47,15 +54,29 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  sendMessage(message: string){
+  // Send a request to add message to chat table
+
+  sendMessage(message: string, target: HTMLElement){
     const messageRequest = new MessageRequest(this.reciever, message);
     this.chatService.sendMessage(messageRequest).subscribe(resp =>{
       if(resp.status == 200){
         this.loadmessages();
+        this.sendMessageContent = "";
       }
-    })
-
+    });
   }
+
+  // Scrolling function show that user see last message 
+
+  scrollToLastMesage() {
+    console.log("scrollto last message");
+    this.target = document.getElementById("target");
+    this.target.scrollIntoView({behavior: 'smooth',block: "start",
+    inline: "nearest"});
+    // this.router.navigate([], { fragment: "target" });
+  }
+
+  // Search for new userlist according to search box
 
   searchforusers(val: string){
     this.showRecievers= [];
@@ -70,10 +91,14 @@ export class ChatComponent implements OnInit {
 
   }
 
+  // Method to go to userlistpage
+
   goToUserListPage(){
     this.reciever = null;
     this.messages = null;
   }
+
+  // method to check which page should be displayed
 
   showUserList(){
     if(this.reciever == null){
@@ -83,6 +108,20 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  // used for checking condition that who send a particular message
+
+  userIsSender(sender: string){
+    if(sender == this.reciever){
+      return false;
+    }
+    return true;
+  }
+
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+    
+     }
 
 
 }

@@ -1,11 +1,7 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { Question } from "src/app/objects/question";
 import { QuestionList } from "src/app/objects/questionlist";
 import { SearchData } from "src/app/objects/searchdata";
 import { MakeRequest } from "../request/make.request";
-import { NotificationService } from "./notification.service";
 
 @Injectable()
 export class QaAllService{
@@ -14,17 +10,24 @@ export class QaAllService{
     basepath:string = "all/";
     response: any;
 
-    constructor(private http: HttpClient, private route:Router, private makeRequest: MakeRequest, private notifyService:NotificationService){}
+    constructor( private makeRequest: MakeRequest){}
+
+    // Request to Search Question By Description from backend
 
     getQuestionByDescription(searchData:SearchData){
         const path = this.basepath+"searchbydescription";
         return this.makeRequest.postRequest(this.questionList, searchData, path, this.microservice);
     }
 
+    // Request to Search Question By Topic from backend
+
     getQuestionByTopic(searchData:SearchData){
         const path = this.basepath+"searchbytopic";
         return this.makeRequest.postRequest(this.questionList, searchData, path, this.microservice);
     }
+
+    // Request Search images related to question answer from 
+    // backend
 
     searchImage(searchImg: SearchData){
         const path = this.basepath+"searchimage";

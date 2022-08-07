@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CreateAnswerData } from '../objects/createanswerdata';
 import { Question } from '../objects/question';
+import { NotificationService } from '../shared/services/notification.service';
 import { QaUserService } from '../shared/services/qa.user.service';
 
 @Component({
@@ -22,16 +21,20 @@ export class GiveanswerComponent implements OnInit {
   message: string;
   imageName: any;
 
-  constructor(private qaUserService:QaUserService, private route:Router, private httpClient:HttpClient) { }
+  constructor(private qaUserService:QaUserService, private notify: NotificationService) { }
 
   ngOnInit(): void {
   }
+
+  // Form to get Answer Details
 
   giveAnswerForm = new FormGroup({
     InputDescription: new FormControl("",[
       Validators.required
     ])
-  })
+  });
+
+  // Send A backend request with answer data to add to answer Table
 
   giveAnswerSubmited(){
     const description = this.giveAnswerForm.value.InputDescription;
@@ -46,7 +49,7 @@ export class GiveanswerComponent implements OnInit {
     this.qaUserService.createAnswer(answerData).subscribe((response) => {
         if (response.status === 200) {
           this.message = 'Image uploaded successfully';
-          alert("Uploaded")
+          this.notify.showSuccess(this.message, "");
         } else {
           this.message = 'Image not uploaded successfully';
         }
@@ -54,6 +57,7 @@ export class GiveanswerComponent implements OnInit {
       );
     }else{
       console.log("Input are not valid for creating question");
+      this.notify.showError("Question Not uploaded", "");
     } 
   }
 
@@ -61,8 +65,9 @@ export class GiveanswerComponent implements OnInit {
     return this.giveAnswerForm.get("InputDescription") as FormControl;
   }
 
+  // Check for file input so that it can be uploaded
+
   public onFileChanged(event) {
-    // Select File
     if(event.target.files!=null){
     this.selectedFile = <File> event.target.files.item(0);
     console.log(this.selectedFile);

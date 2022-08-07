@@ -1,7 +1,12 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
   <div>
-    <p>Given By - {{ answer.username }}</p>
+    <p>Given By - {{ answer.username | titlecase }}</p>
     <p>Answer - {{ answer.description }}</p>
+  </div>
+  <div class="col-md-12 my-2">
+    <div *ngIf="retrievedImage">
+      <img [src]="retrievedImage" />
+    </div>
   </div>
   <p>
     <button
@@ -12,9 +17,4 @@
       Delete
     </button>
   </p>
-  <div class="col-md-12 my-2">
-    <div *ngIf="retrievedImage">
-      <img [src]="retrievedImage" />
-    </div>
-  </div>
 </div>

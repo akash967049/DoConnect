@@ -1,7 +1,7 @@
 <div class="mt-4 shadow p-2 text-center container" style="max-width: 500px">
   <div>
-    <p>Asked By - {{ question.username }}</p>
-    <p>Topic - {{ question.topic }}</p>
+    <p>Asked By - {{ question.username | titlecase }}</p>
+    <p>Topic - {{ question.topic | titlecase }}</p>
     <p>{{ question.description }}</p>
   </div>
   <div class="col-md-12 my-2">
@@ -10,7 +10,9 @@
     </div>
   </div>
   <p>
-    <button class="btn btn-danger btn-md" (click)="reject()">Reject</button>
-    <button class="btn btn-primary btn-md" (click)="approve()">Approve</button>
+    <button class="btn btn-danger btn-md m-1" (click)="reject()">Reject</button>
+    <button class="btn btn-primary btn-md m-1" (click)="approve()">
+      Approve
+    </button>
   </p>
 </div>

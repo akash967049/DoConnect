@@ -39,12 +39,12 @@
       >
         <div class="mt-2">
           <h1>
-            {{ userinfoData.value.firstname }}
-            {{ userinfoData.value.middlename }}
-            {{ userinfoData.value.lastname }}
+            {{ userinfoData.value.firstname | titlecase }}
+            {{ userinfoData.value.middlename | titlecase }}
+            {{ userinfoData.value.lastname | titlecase }}
           </h1>
           <p class="title">{{ userinfoData.value.username }}</p>
-          <p>Gender - {{ userinfoData.value.gender }}</p>
+          <p>Gender - {{ gender }}</p>
           <p>Date of birth - {{ userinfoData.value.dateofbirth }}</p>
           <p>Phone - {{ userinfoData.value.phone }}</p>
           <p>Email - {{ userinfoData.value.email }}</p>

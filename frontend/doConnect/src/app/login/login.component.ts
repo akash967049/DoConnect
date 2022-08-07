@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Login Form to take login credential
+
   loginForm = new FormGroup({
     InputUserName: new FormControl("", [
       Validators.required, 
@@ -29,8 +31,9 @@ export class LoginComponent implements OnInit {
     ])
   });
 
+  // Send Request to get backend For getiing authorization token
+
   loginSubmited(){
-    //console.log(this.loginForm.value);
     this.route.navigate(['/loader']);
     this.authService.userLogin(this.loginForm.value.InputUserName, this.loginForm.value.InputPassword);   
   }

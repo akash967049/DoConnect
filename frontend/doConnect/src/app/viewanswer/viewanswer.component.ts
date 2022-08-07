@@ -29,13 +29,19 @@ export class ViewanswerComponent implements OnInit {
     this.loadAnswerImage();
   }
 
+  // Detact change in variable to render answer image
+
   ngOnChanges(){
     this.loadAnswerImage();
   }
 
+  // Sends request for delete a answer
+
   deleteAnswer(){
     this.deleteAns.emit(this.answer);
   }
+
+  // loads Image related to a answer
 
   loadAnswerImage(){
     if(this.answer){
@@ -51,6 +57,8 @@ export class ViewanswerComponent implements OnInit {
       });
     }
   }
+
+  // Checks wether admin is logged in or not
 
   checkAdminLogin(){
     return (this.authGuard.checklogin() && this.authGuard.checkadmin());

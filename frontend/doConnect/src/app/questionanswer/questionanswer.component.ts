@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Answer } from '../objects/answer';
 import { Feedback } from '../objects/Feedback';
 import { IdData } from '../objects/iddata';
@@ -28,11 +27,13 @@ export class QuestionanswerComponent implements OnInit {
   retrieveResonse: any;
 
 
-  constructor(private qaUserService: QaUserService, private route: ActivatedRoute, private router: Router, private qaAllService: QaAllService, private qaAdminService: QaAdminService, private notifyService: NotificationService) { this.loadQuestionAnswer();}
+  constructor(private qaUserService: QaUserService, private router: Router, private qaAllService: QaAllService, private qaAdminService: QaAdminService, private notifyService: NotificationService) { this.loadQuestionAnswer();}
 
   ngOnInit(): void {
     this.loadQuestionAnswer;
   }
+
+  // Method to load Question Answer Page
 
   loadQuestionAnswer(){
     this.question = this.router.getCurrentNavigation().extras.state['data'];
@@ -40,6 +41,8 @@ export class QuestionanswerComponent implements OnInit {
     this.loadQuestionImage();
     this.loadAnswers(this.question.id);
   }
+
+  // Method loads answers of a question from backend
 
   loadAnswers(questionId : number){
     this.qaUserService.getAnswerByQuestionId(new IdData(questionId)).subscribe(resp => {
@@ -49,6 +52,8 @@ export class QuestionanswerComponent implements OnInit {
       }
     });
   }
+
+  // This loads Image related to question if any
 
   loadQuestionImage(){
     if(this.question){
@@ -65,6 +70,8 @@ export class QuestionanswerComponent implements OnInit {
     }
   }
 
+  // Method Used to delete a answer
+
   deleteAns(answer: Answer){
     this.qaAdminService.deleteAnswer(new IdData(answer.id)).subscribe(resp => {
       if(resp.body != null){
@@ -74,6 +81,15 @@ export class QuestionanswerComponent implements OnInit {
           this.loadAnswers(this.question.id);
       }
     });
+  }
+
+  // Checks wether any answer is found to a question or not
+
+  AnswerFound(){
+    if(this.answers.length==0){
+      return false;
+    }
+    return true;
   }
 
 }

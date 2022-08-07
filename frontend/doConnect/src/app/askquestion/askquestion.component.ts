@@ -1,11 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CreateQuestionData } from '../objects/createquestiondata';
-import { AuthService } from '../shared/services/auth.service';
 import { QaUserService } from '../shared/services/qa.user.service';
-import { SearchData } from '../objects/searchdata';
 import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
@@ -20,13 +16,14 @@ export class AskquestionComponent implements OnInit {
   base64Data: any;
   retrieveResonse: any;
   message: string;
-  // imageName: any;
   searchImg: any;
 
-  constructor(private qaUserService:QaUserService, private route:Router, private httpClient:HttpClient, private notifyService: NotificationService) { }
+  constructor(private qaUserService:QaUserService, private notifyService: NotificationService) { }
 
   ngOnInit(): void {
   }
+
+  // Form to get ask question details from a form
 
   askQuestionForm = new FormGroup({
     InputTopic: new FormControl("",[
@@ -38,6 +35,8 @@ export class AskquestionComponent implements OnInit {
       Validators.required
     ])
   })
+
+  // Request to add new Question to database
 
   askQuestionSubmited(){
     const topic = this.askQuestionForm.value.InputTopic;
@@ -70,6 +69,8 @@ export class AskquestionComponent implements OnInit {
   get InputDescription(){
     return this.askQuestionForm.get("InputDescription") as FormControl;
   }
+
+  // method checks file input from the user
 
   public onFileChanged(event) {
     // Select File

@@ -19,6 +19,8 @@ public class EmailSenderService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	// Send email method 
+	
 	public void sendEmail(String toEmail, String body, String subject) {
 		
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -44,6 +46,8 @@ public class EmailSenderService {
 		String subject = "Question asked on DoConnect, approve it!";
 		new Thread(() -> this.sendEmail(Variables.emaiUsername, body, subject));
 	}
+	
+	// send email for answer approval
 	
 	public void requestToApproveAnswer(String username, Answer answer) {
 		String body = "Hey Aakash Verma!\n Some activity on your doConnect application\n\n"+

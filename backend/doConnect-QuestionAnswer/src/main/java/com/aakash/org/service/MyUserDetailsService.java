@@ -21,6 +21,8 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	// Used for authorization of every request
+	
 	@Override
 	public MyUserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		Optional<User> user = userRepository.findByUserName(userName);

@@ -19,23 +19,11 @@ export class NavigationbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   
-
+  // Load User Detail Page
+  
   gotouserinfo(){
     this.userService.getUserDetails(new UserName("user"))
-  }
-
-  goToAskQuestion(){
-    this.route.navigate(["/askquestion"]);
-  }
-
-  goToApproveQuestion(){
-    this.qaAdminService.getUnapprovedQuestions();
-  }
-
-  goToApproveAnswer(){
-    this.qaAdminService.getUnapprovedAnswers();
   }
 
 }

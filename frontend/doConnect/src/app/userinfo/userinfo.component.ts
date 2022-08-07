@@ -16,8 +16,12 @@ import { UserService } from '../shared/services/user.service';
 export class UserinfoComponent implements OnInit {
 
   userDetail!:UserDetail;
+  gender:string="";
+
   userUpdateInfo:UserUpdateInfo = new UserUpdateInfo(new Name("","",""),"","");
+
   userinfoData:BehaviorSubject<any> = new BehaviorSubject(null);
+
   userName:UserName = new UserName("");
 
   constructor(private userService:UserService, public authGuard:AuthRouteGaurd) {
@@ -27,13 +31,33 @@ export class UserinfoComponent implements OnInit {
   ngOnInit(): void {
     this.loadUserDetail();
     this.userinfoData.next(this.userDetail);
+    this.getGenderDetail();
   }
+
+  // Method to load user details from localstorage
 
   loadUserDetail(){
     const data = localStorage.getItem("userDetail");
     if(data!=null){
       this.userDetail = JSON.parse(data)
+      
     }
+  }
+
+  // Method to get gender
+
+  getGenderDetail(){
+    const g = this.userinfoData.value.gender;
+    if(g=="M"){
+      this.gender = "Male";
+    }else if(g=="F"){
+      this.gender = "Female";
+    }else if(g=="O"){
+      this.gender = "Other";
+    }else{
+      this.gender = "Prefer not to say";
+    }
+
   }
 
   updateName = new FormGroup({
@@ -117,9 +141,7 @@ export class UserinfoComponent implements OnInit {
     return this.updateDateOfBirth
   }
 
-
-  // const updateChoices:string[] = ['name','dateofbirth','gender','phone','email','address'];
-
+  // Mehtod to update name
 
   updateNameSubmited(){
     const name = this.updateName.value;
@@ -136,6 +158,8 @@ export class UserinfoComponent implements OnInit {
     }
   }
 
+  // Mehtod to update gender
+
   updateGenderSubmited(){
     const value = this.updateGender.value.InputGender;
     if(value!=null && value!=undefined){
@@ -144,6 +168,8 @@ export class UserinfoComponent implements OnInit {
       this.userService.updateUserDetail(this.userUpdateInfo, 2);
     }
   }
+
+  // Mehtod to update phone
 
   updatePhoneSubmited(){
     const value = this.updatePhone.value.InputPhone;
@@ -154,6 +180,8 @@ export class UserinfoComponent implements OnInit {
     }
   }
 
+  // Mehtod to update email
+
   updateEmailSubmited(){
     const value = this.updateEmail.value.InputEmail;
     if(value!=null && value!=undefined){
@@ -162,6 +190,8 @@ export class UserinfoComponent implements OnInit {
       this.userService.updateUserDetail(this.userUpdateInfo, 4);
     }
   }
+
+  // Mehtod to update address
 
   updateAddressSubmited(){
     const value = this.updateAddress.value.InputAddress;
@@ -172,6 +202,8 @@ export class UserinfoComponent implements OnInit {
     }
   }
 
+  // Mehtod to update date Of Birth
+
   updateDateOfBirthSubmited(){
     const value = this.updateDateOfBirth.value.InputDateOfBirth;
     if(value!=null && value!=undefined){
@@ -181,10 +213,14 @@ export class UserinfoComponent implements OnInit {
     }
   }
 
+  // Method to delete user
+
   deleteUser(){
     this.userName.username=this.userDetail.username;
     this.userService.getUserDelete(this.userName);
   }
+
+  // Checks wether to show delete button or not
 
   showdeletebutton():Boolean{
     if(this.userDetail.username!="akash"){

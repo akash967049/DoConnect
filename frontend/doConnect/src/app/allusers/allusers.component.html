@@ -1,4 +1,15 @@
 <h1 class="text-center mb-5">List of all the Users</h1>
-<div *ngFor="let user of alluser.value">
-  <app-user-item [user]="user"></app-user-item>
+
+<div *ngIf="!users.length; else elseBlock">
+  <h6 class="text-center">Their are no User for your DoConnect Application</h6>
+  <p class="text-center">
+    Do promotion of DoConnect to incourage users to signup
+  </p>
 </div>
+<ng-template #elseBlock>
+  <div>
+    <div *ngFor="let user of users">
+      <app-user-item [user]="user"></app-user-item>
+    </div>
+  </div>
+</ng-template>

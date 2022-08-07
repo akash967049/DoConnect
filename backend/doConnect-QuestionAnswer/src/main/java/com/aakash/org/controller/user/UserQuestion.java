@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -44,6 +43,8 @@ public class UserQuestion {
 				.body(new Feedback("You are most welcome"));
 		return response;
 	}
+	
+	// Create Answer
 	
 	@PostMapping(value = {"createquestion"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<?> createQuestion(

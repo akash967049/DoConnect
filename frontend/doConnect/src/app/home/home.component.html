@@ -1,22 +1,55 @@
 <h2 class="text-center mt-3 mb-3">Welcome to Do Connect</h2>
-<div>
-  <input
-    class="form-control me-2"
-    type="search"
-    #searchQuestion
-    (keyup)="searchByDescription(searchQuestion.value)"
-    placeholder="Search"
-    aria-label="Search"
-  />
-</div>
-<div *ngIf="homeQuestions">
-  <div *ngFor="let question of homeQuestions">
-    <app-viewquestion
-      [question]="question"
-      (deleteQues)="deleteQues(question)"
-    ></app-viewquestion>
+<div class="row">
+  <h5 class="text-center mt-3 mb-3">Search Question By Description</h5>
+  <div class="row d-flex justify-content-center">
+    <input
+      class="form-control text-center me-2 searchByDescription"
+      type="search"
+      #searchQuestion
+      (keyup)="searchByDescription(searchQuestion.value)"
+      placeholder="Search By Description"
+      aria-label="Search"
+    />
   </div>
+  <h5 class="text-center mt-3 mb-3">Get Question By Topic</h5>
+  <p class="text-center">
+    <button class="btn btn-info m-1" (click)="loadhomeQuestionByTopic(java)">
+      Java
+    </button>
+    <button class="btn btn-info m-1" (click)="loadhomeQuestionByTopic(angular)">
+      Angular
+    </button>
+    <button class="btn btn-info m-1" (click)="loadhomeQuestionByTopic(python)">
+      Python
+    </button>
+    <button
+      class="btn btn-info m-1"
+      (click)="loadhomeQuestionByTopic(database)"
+    >
+      Database
+    </button>
+    <button
+      class="btn btn-info m-1"
+      (click)="loadhomeQuestionByTopic(javascript)"
+    >
+      JavaScript
+    </button>
+  </p>
 </div>
+<div *ngIf="!QuestionFound(); else elseBlock">
+  <h6 class="text-center">No Questions found for above category</h6>
+</div>
+<ng-template #elseBlock>
+  <div>
+    <div *ngFor="let question of homeQuestions">
+      <app-viewquestion
+        [question]="question"
+        (deleteQues)="deleteQues(question)"
+      ></app-viewquestion>
+    </div>
+  </div>
+</ng-template>
+
 <div *ngIf="checkUserLogin()">
   <div class="stickonscreen">
     <button

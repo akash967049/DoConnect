@@ -5,7 +5,6 @@ package com.aakash.org.service;
  */
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.aakash.org.customException.InvalidUserNamePasswordException;
 import com.aakash.org.customException.UserAlreadyExistsException;
 import com.aakash.org.entity.PersonalInformation;
 import com.aakash.org.entity.User;
-import com.aakash.org.repository.PersonalInformationRepository;
 import com.aakash.org.repository.UserRepository;
 import com.aakash.org.util.JwtUtil;
 import com.aakash.org.util.request.AuthenticationRequest;
@@ -43,8 +41,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private PersonalInformationRepository pIR;
 	
 	// Get user Role details
 	
@@ -68,9 +64,11 @@ public class UserService {
 		String username = jwtTokenUtil.extractUsername(jwt);
 		User user = userRepository.findByUserName(username).orElse(null);
 		System.out.println(jwt);
-		if(user != null) {
+		if(user != null && user.isActive()) {
 			user.setSession(true);
 			userRepository.save(user);
+		}else {
+			throw new InvalidUserNamePasswordException("Incorrect username or password");
 		}
 		return jwt;
 	}
@@ -126,9 +124,8 @@ public class UserService {
 		User user = userRepository.findByUserName(username).orElse(null);
 		String message;
 		if(user != null && user.getAuthorities().equalsIgnoreCase("user")) {
-			PersonalInformation pi = pIR.findById(user.getId());
-			userRepository.delete(user);
-			pIR.delete(pi);
+			user.setActive(false);
+			userRepository.save(user);
 			message = "Account deleted successfully";
 		}else if(!user.getAuthorities().equalsIgnoreCase("user")) {
 			message = "Admin account can not be deleted";
@@ -141,7 +138,7 @@ public class UserService {
 	// Return list of all users
 	
 	public ListOfUsersResponse getAllUsers(String authority) {
-		List<User> users = userRepository.findAllByAuthorities(authority);
+		List<User> users = userRepository.findAllUsers(authority);
 		ListOfUsersResponse responce = new ListOfUsersResponse(new ArrayList<>());
 		for (User user: users) {
 			responce.getAllUsers().add(user.getUserName());

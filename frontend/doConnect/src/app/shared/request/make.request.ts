@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Route, Router } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
@@ -10,6 +10,8 @@ export class MakeRequest{
 
     constructor(private http: HttpClient,  private route:Router, private notifyService:NotificationService){
     }
+
+    // Creates a post request
 
     postRequest(response: any, data: any, path: string, base:number){
         const requestUrl = this.baseUrls[base]+path;
@@ -23,6 +25,8 @@ export class MakeRequest{
         );
 
     }
+
+    // creates get request 
 
     getRequest(response: any, path: string, base:number){
         var data:string;
@@ -53,9 +57,8 @@ export class MakeRequest{
     }
 
 
-    gotologin(){
-        
-    }
+    // error handler in case response error from server
+    
     private handleError(error: HttpErrorResponse) {
         
         if (error.status === 0) {

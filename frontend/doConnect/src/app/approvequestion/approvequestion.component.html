@@ -1,8 +1,18 @@
 <h2 class="text-center mb-5">List of all the questions to approve</h2>
-<div *ngFor="let question of approvequestions">
-  <app-approvequestionitem
-    [question]="question"
-    (approveQuestion)="approveQuestion(question)"
-    (rejectQuestion)="rejectQuestion(question)"
-  ></app-approvequestionitem>
+<div *ngIf="!approvequestions.length; else elseBlock">
+  <h6 class="text-center">No Question request pending for Approval</h6>
+  <p class="text-center">
+    Do promotion of DoConnect to incourage users to ask Question
+  </p>
 </div>
+<ng-template #elseBlock>
+  <div>
+    <div *ngFor="let question of approvequestions">
+      <app-approvequestionitem
+        [question]="question"
+        (approveQuestion)="approveQuestion(question)"
+        (rejectQuestion)="rejectQuestion(question)"
+      ></app-approvequestionitem>
+    </div>
+  </div>
+</ng-template>
